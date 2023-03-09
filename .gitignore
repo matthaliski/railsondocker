@@ -37,4 +37,7 @@
 # External editors
 /.idea/
 
+# Environment Variables
+/.env
+
 .DS_Store

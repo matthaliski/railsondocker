@@ -26,3 +26,15 @@ docker compose up
 # If anything seems "cached" and you wan to start fresh:
 docker compose up --build
 ```
+
+## Interactive shell for `web`
+
+If you've dockerized your Rails app, then you're no longer going to run `rails` commands from your local terminal. Heck, you might not even have the correct Ruby version installed or any of your app's gems. All that stuff is in the containers you've set up.
+
+Instead, we can run bash and attach to the already running `web` container. (This assume you've already done `docker compose up`)
+
+```shell
+docker compose exec web bash
+```
+
+Now that you've got an interactive shell, you can go to town with stuff like `rails db:migrate` or any other useful `rails` commands.

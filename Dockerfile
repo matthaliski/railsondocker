@@ -6,7 +6,8 @@ LABEL maintainer="matt@haliski.com"
 # using older cached versions.
 # Second, it's convention to list the installs one per line and alphabetical.
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
-  nodejs
+  nodejs \
+  vim
 
 # Copy the Gemfile and Gemfile.lock over first (and separately) from the other files to
 # eliminate triggering a cache-invalidation and reinstalling all gems. Doing
