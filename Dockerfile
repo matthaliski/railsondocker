@@ -26,8 +26,6 @@ COPY . /usr/src/app/
 
 # Get JavaScript up and running.
 RUN npm install --global yarn
-#RUN yarn build --watch
-#RUN yarn build:css --watch
 
 
 # Start rails and bind to 0.0.0.0
