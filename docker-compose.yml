@@ -18,6 +18,18 @@ services:
       - .env/development/database
     volumes:
       - db_data:/var/lib/postgresql/data
+  js:
+    build: .
+    tty: true
+    command: "yarn build --watch"
+    volumes:
+      - .:/usr/src/app
+  css:
+    build: .
+    tty: true
+    command: "yarn build:css --watch"
+    volumes:
+      - .:/usr/src/app
 
 volumes:
   db_data:

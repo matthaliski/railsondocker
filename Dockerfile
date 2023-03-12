@@ -2,10 +2,15 @@ FROM ruby:3.1.3
 
 LABEL maintainer="matt@haliski.com"
 
+# Ensure node.js 19 is available for apt-get
+RUN curl -sL https://deb.nodesource.com/setup_19.x | bash -
+
 # First, make sure to run update and install in a one-liner to avoid
 # using older cached versions.
 # Second, it's convention to list the installs one per line and alphabetical.
-RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
+RUN apt-get update -qq && apt-get install -y \
+  build-essential \
+  libvips \
   nodejs \
   vim
 
@@ -18,6 +23,12 @@ RUN bundle install
 
 # Copy the rest of the project files into the image
 COPY . /usr/src/app/
+
+# Get JavaScript up and running.
+RUN npm install --global yarn
+#RUN yarn build --watch
+#RUN yarn build:css --watch
+
 
 # Start rails and bind to 0.0.0.0
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]
