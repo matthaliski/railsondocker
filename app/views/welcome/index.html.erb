@@ -1,3 +1,12 @@
-<h1>This page has been viewed <%= pluralize(@page_hits, "time") %></h1>
+<% content_for :head do %>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded",function(){
+      setTimeout(() => {
+        console.log("all done")
+      }, 10000)
+      document.getElementsByTagName('h1')[0].append(' ENHANCED!');
+    });
+  </script>
+<% end %>
 
-<p>Find me in app/views/welcome/index.html.erb</p>
+<h1>This page has been viewed <%= pluralize(@page_hits, "time") %>!</h1>

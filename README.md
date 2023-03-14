@@ -38,3 +38,23 @@ docker compose exec web bash
 ```
 
 Now that you've got an interactive shell, you can go to town with stuff like `rails db:migrate` or any other useful `rails` commands.
+
+### Testing
+
+It might be obvious now that you can also run your test from here. This repo has Rspec set up and a simple `rspec` from the prompt should start running tests, even JavaScript system tests with Capybara.
+
+## Debugging
+
+If you would like to debug by dropping in a `debugger` to get an interactive session, you'll need to stop the currently running Rails server
+
+```shell
+docker compose stop web
+```
+
+Then, you'll start it back up again, but in a slightly different way:
+
+```shell
+docker compose run --service-ports web
+```
+
+Once you've done that, your breakpoints should work. Happy debugging!

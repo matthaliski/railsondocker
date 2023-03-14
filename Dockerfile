@@ -1,4 +1,5 @@
-FROM ruby:3.1.3
+ARG RUBY_VERSION=3.1.3
+FROM ruby:$RUBY_VERSION
 
 LABEL maintainer="matt@haliski.com"
 
@@ -12,7 +13,9 @@ RUN apt-get update -qq && apt-get install -y \
   build-essential \
   libvips \
   nodejs \
-  vim
+  vim && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
 
 # Copy the Gemfile and Gemfile.lock over first (and separately) from the other files to
 # eliminate triggering a cache-invalidation and reinstalling all gems. Doing
