@@ -9,7 +9,7 @@ RUN curl -sL https://deb.nodesource.com/setup_19.x | bash -
 # First, make sure to run update and install in a one-liner to avoid
 # using older cached versions.
 # Second, it's convention to list the installs one per line and alphabetical.
-RUN apt-get update -qq && apt-get install -y \
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   build-essential \
   libvips \
   nodejs \
@@ -27,9 +27,14 @@ RUN bundle install
 # Copy the rest of the project files into the image
 COPY . /usr/src/app/
 
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
+
 # Get JavaScript up and running.
 RUN npm install --global yarn
 
+# Docker entrypoint does final house cleaning
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 # Start rails and bind to 0.0.0.0
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]

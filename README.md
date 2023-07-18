@@ -41,7 +41,7 @@ Now that you've got an interactive shell, you can go to town with stuff like `ra
 
 ### Testing
 
-It might be obvious now that you can also run your test from here. This repo has Rspec set up and a simple `rspec` from the prompt should start running tests, even JavaScript system tests with Capybara.
+It might be obvious now that you can also run your tests from here. This repo has Rspec set up and a simple `rspec` from the prompt should start running tests, even JavaScript system tests with Capybara.
 
 ## Debugging
 
