@@ -36,5 +36,7 @@ RUN npm install --global yarn
 # Docker entrypoint does final house cleaning
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-# Start rails and bind to 0.0.0.0
+# Start rails and bind to 0.0.0.0. This array notation is known as the Exec form
+# and is needed so that our Rails server is started as the first process in the
+# container (PID 1) and correctly receives Unix signals such as the signal to terminate.
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]

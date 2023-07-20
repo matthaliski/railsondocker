@@ -2,6 +2,27 @@
 
 This example app follows the book Docker For Rails Developers and creates a Rails app that runs on Docker.
 
+## Housekeeping
+
+By default, Ruby buffers output to `stdout`, which doesn’t play well with Compose. Let’s fix this by switching off Ruby’s output buffering. Add the following line to the top of your `config/boot.rb` file:
+
+```
+$stdout.sync = true
+```
+
+## Running the app (the cool way)
+
+Use Docker Compose to specify your needs in a declarative way and let it do all the heavy lifting.
+
+```shell
+docker compose up
+
+# If anything seems "cached" and you wan to start fresh:
+docker compose up --build
+```
+
+Compose will only build images if they don't exist. You are responsible for rebuilding things as needed.
+
 ## Running the app in Docker (manually, not cool)
 
 First, make sure you have an image built:
@@ -14,17 +35,6 @@ Once that's built, you can run a container:
 
 ```shell
 docker run -p 3000:3000 myapp
-```
-
-## Running the app the cool way
-
-Use Docker Compose to specify your needs in a declarative way and let it do all the heavy lifting.
-
-```shell
-docker compose up
-
-# If anything seems "cached" and you wan to start fresh:
-docker compose up --build
 ```
 
 ## Interactive shell for `web`
