@@ -8,6 +8,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 
 require 'rspec/rails'
 require 'capybara/rails'
+require 'selenium/webdriver'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -66,17 +67,25 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # Add options for the Chrome browser
   chrome_options = Selenium::WebDriver::Chrome::Options.new
+  chrome_options.add_argument("--headless")
+  chrome_options.add_argument("--disable-gpu")
+  chrome_options.add_argument("--no-sandbox")
 
-  # Disable notifications
-  chrome_options.add_argument("--disable-notifications")
-
+  # Slower, but you get to see what is happening if you connect via VNC
   Capybara.register_driver :selenium_chrome_in_container do |app|
     Capybara::Selenium::Driver.new app,
-    browser: :remote,
-    url: "http://selenium_chrome:4444/wd/hub",
-    capabilities: :chrome
+      browser: :remote,
+      url: "http://selenium_chrome:4444/wd/hub",
+      capabilities: :chrome
+  end
+
+  # Faster, but you're running headless and don't get to see what's going on
+  Capybara.register_driver :headless_selenium_chrome_in_container do |app|
+    Capybara::Selenium::Driver.new app,
+      browser: :remote,
+      url: "http://selenium_chrome:4444/wd/hub",
+      capabilities: chrome_options
   end
 
   # Faster for non-js tests
@@ -86,8 +95,10 @@ RSpec.configure do |config|
 
   # Slower, but required for tests involving JS
   config.before(:each, type: :system, js: true) do
-    # driven_by :headless_selenium_chrome_in_container
-    driven_by :selenium_chrome_in_container
+    # Run tests fast, but without seeing what's going on.
+    driven_by :headless_selenium_chrome_in_container
+    # Slower tests, but you can seen them running via VNC
+    # driven_by :selenium_chrome_in_container
     Capybara.server_host = "0.0.0.0"
     Capybara.server_port = 4000
     Capybara.app_host = 'http://web:4000'
