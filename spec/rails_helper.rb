@@ -33,6 +33,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -65,6 +66,19 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Add options for the Chrome browser
+  chrome_options = Selenium::WebDriver::Chrome::Options.new
+
+  # Disable notifications
+  chrome_options.add_argument("--disable-notifications")
+
+  Capybara.register_driver :selenium_chrome_in_container do |app|
+    Capybara::Selenium::Driver.new app,
+    browser: :remote,
+    url: "http://selenium_chrome:4444/wd/hub",
+    capabilities: :chrome
+  end
+
   # Faster for non-js tests
   config.before(:each, type: :system) do
     driven_by :rack_test
@@ -72,7 +86,8 @@ RSpec.configure do |config|
 
   # Slower, but required for tests involving JS
   config.before(:each, type: :system, js: true) do
-    driven_by :headless_selenium_chrome_in_container
+    # driven_by :headless_selenium_chrome_in_container
+    driven_by :selenium_chrome_in_container
     Capybara.server_host = "0.0.0.0"
     Capybara.server_port = 4000
     Capybara.app_host = 'http://web:4000'

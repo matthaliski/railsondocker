@@ -53,6 +53,8 @@ Now that you've got an interactive shell, you can go to town with stuff like `ra
 
 It might be obvious now that you can also run your tests from here. This repo has Rspec set up and a simple `rspec` from the prompt should start running tests, even JavaScript system tests with Capybara.
 
+You can see your system tests running by opening up the Screen Sharing app on your Mac. You'll connect to `localhost:5900` and enter in the password `secret`. Doing this will allow you to watch the tests as they run -- they'll be fast!
+
 ## Debugging
 
 If you would like to debug by dropping in a `debugger` to get an interactive session, you'll need to stop the currently running Rails server

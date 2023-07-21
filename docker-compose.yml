@@ -1,7 +1,13 @@
+# The version is required and states the file format used by compose.
+# https://docs.docker.com/compose/compose-file/compose-versioning/
 version: '3.8'
 
+# Each service will be run in its own container
 services:
   web:
+    # By using `build` we're telling Docker to reference our Dockerfile for
+    # instructions on what and how to build. This differs from the redis service
+    # below which is able to simply use a preexisting image.
     build: .
     ports:
       - "3000:3000"
@@ -11,6 +17,9 @@ services:
     env_file:
       - .env/development/database
       - .env/development/web
+  # In this instance, we're okay with using the preexisting redis image. We also
+  # don't expose any ports because there's no need to have redis accessible to
+  # the outside world.
   redis:
     image: redis
     volumes:
@@ -21,12 +30,14 @@ services:
       - .env/development/database
     volumes:
       - db_data:/var/lib/postgresql/data
+  # Used for building our JavaScript when files are changed
   js:
     build: .
     tty: true
     command: "yarn build --watch"
     volumes:
       - .:/usr/src/app
+  # Used for building our CSS when files are changed
   css:
     build: .
     tty: true
@@ -36,12 +47,15 @@ services:
   selenium_chrome:
     image:
       seleniarm/standalone-chromium:latest
+    shm_size: 2g
     tty: true
     logging:
       driver: none
     ports:
       - "5900:5900"
+      - "7900:7900"
 
+# Named volumes allow us to persist data as containers are created and destroyed.
 volumes:
   db_data:
   redis_data:
