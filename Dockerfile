@@ -32,6 +32,7 @@ RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 # Get JavaScript up and running.
 RUN npm install --global yarn
+RUN yarn install
 
 # Docker entrypoint does final house cleaning
 ENTRYPOINT ["./docker-entrypoint.sh"]
