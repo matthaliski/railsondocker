@@ -1,13 +1,38 @@
 # Rails on Docker
 
-This example app follows the book Docker For Rails Developers and creates a Rails app that runs on Docker.
+This example app started by following the book Docker For Rails Developers and has been updated by me as time goes on. It creates a Rails app that runs on Docker.
 
 ## Housekeeping
 
-By default, Ruby buffers output to `stdout`, which doesn’t play well with Compose. Let’s fix this by switching off Ruby’s output buffering. Add the following line to the top of your `config/boot.rb` file:
+By default, Ruby buffers output to `stdout`, which doesn't play well with Compose. Let’s fix this by switching off Ruby’s output buffering. Add the following line to the top of your `config/boot.rb` file:
 
 ```
 $stdout.sync = true
+```
+
+You will need to populate an `.env` directory at the root of your app. These files are sensitive and should not be checked into version control. The directory structure should look like:
+
+```
+.env
+└── development
+    ├── database
+    └── web
+```
+
+Those files are referenced in `docker-compose.yml`. Here is some example content:
+
+**.env/development/database**
+
+```
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=aGoodStrongPassword
+POSTGRES_DB=myapp_development
+```
+
+**.env/development/web**
+
+```
+ DATABASE_HOST=database
 ```
 
 ## Running the app (the cool way)
