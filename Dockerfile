@@ -36,6 +36,8 @@ COPY . /usr/src/app/
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
+RUN bin/rails assets:precompile
+
 # Docker entrypoint does final house cleaning
 ENTRYPOINT ["./docker-entrypoint.sh"]
 

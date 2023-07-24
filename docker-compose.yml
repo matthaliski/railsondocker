@@ -8,7 +8,8 @@ services:
     # By using `build` we're telling Docker to reference our Dockerfile for
     # instructions on what and how to build. This differs from the redis service
     # below which is able to simply use a preexisting image.
-    build: .
+    build:
+      dockerfile: ./Dockerfile.dev
     ports:
       - "3000:3000"
       - "4000:4000"
