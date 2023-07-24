@@ -24,15 +24,17 @@ COPY Gemfile* /usr/src/app/
 WORKDIR /usr/src/app
 RUN bundle install
 
+# Get JavaScript up and running.
+RUN npm install --global yarn
+COPY package.json /usr/src/app/
+COPY yarn.lock /usr/src/app/
+RUN yarn
+
 # Copy the rest of the project files into the image
 COPY . /usr/src/app/
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
-
-# Get JavaScript up and running.
-RUN npm install --global yarn
-RUN yarn install
 
 # Docker entrypoint does final house cleaning
 ENTRYPOINT ["./docker-entrypoint.sh"]

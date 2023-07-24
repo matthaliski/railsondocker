@@ -14,6 +14,7 @@ services:
       - "4000:4000"
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     env_file:
       - .env/development/database
       - .env/development/web
@@ -37,6 +38,7 @@ services:
     command: "yarn build --watch"
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
   # Used for building our CSS when files are changed
   css:
     build: .
@@ -44,6 +46,7 @@ services:
     command: "yarn build:css --watch"
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
   selenium_chrome:
     image:
       seleniarm/standalone-chromium:latest
