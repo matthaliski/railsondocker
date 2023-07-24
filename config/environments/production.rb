@@ -5,9 +5,7 @@ Rails.application.configure do
 
   # Allow requests from subdomains like `www.product.com` and
   # `beta1.product.com`.
-  config.hosts = [
-    "railsondocker.onrender.com"
-  ]
+  config.hosts << "railsondocker.onrender.com"
 
 
   # Code is not reloaded between requests.
