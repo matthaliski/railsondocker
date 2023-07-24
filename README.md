@@ -5,7 +5,7 @@ This example app started by following the book Docker For Rails Developers and h
 * Redis
 * Postgres database
 * esbuild for compiling JavaScript
-* Sass processing into CSS
+* Transpiling Sass to CSS
 * [Testing with RSpec](#testing)
 * [Debugging with breakpoints](#debugging)
 * TODO: Deployment on Render
@@ -155,7 +155,7 @@ If you're interested in getting RubyMine's native debugging tools to work, like 
 
     <img src="./docs/img/docker-compose-setting.png" width="400">
 
-3. Now comes the key part. If you properly set up your remote interpreter mentioned in the [housekeeping section](#rubymine-setup) you should be able to run the **Rails** configuration you just created. This will shut down the running *web* service and fire up a replacement. *This* is what allows RubyMine's debugger to attach and you can drop breakpoints in the gutters of your files and be able to use the GUI to step through things or use the console to inspect.
+3. Now comes the key part. If you properly set up your remote interpreter mentioned in the [housekeeping section](#rubymine-setup) you should be able to run the **Rails** configuration you just created. This will shut down the running *web* service and fire up a replacement. *This* is what allows RubyMine's debugger to attach and you can drop breakpoints in the gutters of your files and are able to use the GUI to step through things or use the console to inspect.
 
 ---
 
