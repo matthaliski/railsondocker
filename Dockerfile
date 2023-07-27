@@ -11,8 +11,9 @@ RUN curl -sL https://deb.nodesource.com/setup_19.x | bash -
 # Second, it's convention to list the installs one per line and alphabetical.
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   build-essential \
-  vips \
+  libvips42 \
   nodejs \
+  postgresql \
   vim && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
