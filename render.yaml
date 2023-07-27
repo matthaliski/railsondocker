@@ -1,0 +1,19 @@
+databases:
+  - name: railsondocker-db
+    databaseName: railsondocker
+    user: matthaliski
+
+services:
+  - type: web
+    name: railsondocker-web
+    env: ruby
+    dockerfilePath: "./Dockerfile"
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: matthaliski
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
